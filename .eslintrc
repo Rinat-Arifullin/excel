@@ -8,7 +8,9 @@
     "rules":{
         "semi": "off",
         "expected_a_b": "off",
-        "es6": "off"
+        "es6": "off",
+        "linebreak-style": ["error", "windows"],
+        "require-jsdoc" : 0
     },
     "extends": ["eslint:recommended", "google"]
 }
