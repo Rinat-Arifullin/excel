@@ -10,7 +10,9 @@
         "expected_a_b": "off",
         "es6": "off",
         "linebreak-style": ["error", "windows"],
-        "require-jsdoc" : 0
+        "require-jsdoc" : 0,
+        "operator-linebreak": "off",
+        "indent": "off"
     },
     "extends": ["eslint:recommended", "google"]
 }
