@@ -8,7 +8,7 @@ export class DomListener {
     this.$root = $root;
     this.listeners = listeners;
   }
-
+  // method has method or not
   noMethodError(method) {
     if (!this[method]) {
       const name = this.name || '';
@@ -16,20 +16,31 @@ export class DomListener {
     }
   }
 
+  // init all event listeners from $root component
   initDomListeners() {
     this.listeners.forEach((listener) => {
-      const method = getMethodName(listener);
-      this.noMethodError(method);
-      this[method] = this[method].bind(this);
-      this.$root.on(listener, this[method]);
+      this.addListener(listener);
     });
   }
 
+  // remove all event listeners
   removeDomListeners() {
     this.listeners.forEach((listener) => {
-      const method = getMethodName(listener);
-      this.$root.off(listener, this[method]);
+      this.removeListener(listener);
     });
+  }
+
+  // add event listener to $root component
+  addListener(listener) {
+    const method = getMethodName(listener);
+    this.noMethodError(method);
+    this[method] = this[method].bind(this);
+    this.$root.on(listener, this[method]);
+  }
+  // remove event listener
+  removeListener(listener) {
+    const method = getMethodName(listener);
+    this.$root.off(listener, this[method]);
   }
 }
 

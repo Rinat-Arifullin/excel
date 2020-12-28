@@ -7,14 +7,33 @@ function createCell() {
   return `<div class="cell" contenteditable></div>`;
 }
 
-function toColumn(symbol) {
-  return `<div class="column">${symbol}</div>`;
+function toColumn(symbol, id) {
+  return `
+    <div class="column">
+      ${symbol}
+      <div 
+        class="col-resize" 
+        data-resize="col" 
+        data-idElement=${'col-' + id}></div>
+    </div>
+  `;
 }
-
-function createRow(content = '', info = '') {
+export function toResizeColumn(node, width = 120) {
+  node.style.width = `${width}px`;
+}
+function createRow(content = '', info = '', id) {
   return `
     <div class="row">
-        <div class="row-info">${info}</div>
+        <div class="row-info">
+          ${info} 
+          ${
+            info
+              ? `<div class="row-resize" data-resize="row" data-idelement=${
+                  'row-' + id
+                }></div>`
+              : ``
+          }
+        </div>
         <div class="row-data">${content}</div>
     </div>
     `;
@@ -32,16 +51,16 @@ export function createTable(rowsCount = 1) {
     .fill('')
     .map((_, index) => {
       const symbol = toChar(index);
-      return toColumn(symbol);
+      return toColumn(symbol, index);
     })
     .join('');
 
   const contentRows = new Array(colsCount).fill('').map(createCell).join('');
 
-  rows.push(createRow(colTitles));
+  rows.push(createRow(colTitles, '', 0));
 
   for (let i = 0; i < rowsCount; i++) {
-    rows.push(createRow(contentRows, i + 1));
+    rows.push(createRow(contentRows, i + 1, i + 1));
   }
 
   return rows.join('');
